@@ -1,0 +1,39 @@
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 8px;
+}
+
+.product-content {
+    display: flex;
+    justify-content: space-between;
+    align-self: end;
+    background: white;
+    padding: 8px;
+    margin: 8px;
+}
+
+.product-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+/* 
+.product-card {
+} */
+
+.stacked {
+    display: grid;
+}
+
+.stacked > * {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+@media (min-width: 60em) {
+    .product-card:first-child {
+        grid-row: span 2;
+        grid-column: span 2;
+    }
+}
