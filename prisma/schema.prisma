@@ -15,6 +15,6 @@ model Product {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     name      String
-    price     String
-    featured  Boolean
+    price     Int
+    image     String
 }

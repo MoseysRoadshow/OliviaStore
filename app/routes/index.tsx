@@ -12,7 +12,7 @@ export const links: LinksFunction = () => {
 };
 
 type LoaderData = {
-    productList: Array<{ id: string; name: string; price: string; featured: boolean }>;
+    productList: Array<{ id: string; name: string; price: number; image: string }>;
 };
 
 export const loader: LoaderFunction = async () => {
@@ -23,15 +23,15 @@ export const loader: LoaderFunction = async () => {
 };
 
 export default function Index() {
-    const data = useLoaderData<LoaderData>();
+    const { productList } = useLoaderData<LoaderData>();
 
     return (
         <div>
             <nav>Nav</nav>
             <header>Olivia's Unnamed Store</header>
             <main className='product-grid'>
-                {data.productList.map((product) => (
-                    <ProductCard key={product.id} name={product.name} price={product.price} />
+                {productList.map((product) => (
+                    <ProductCard key={product.id} name={product.name} price={product.price} image={product.image} />
                 ))}
             </main>
         </div>
