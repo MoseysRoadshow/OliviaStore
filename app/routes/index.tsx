@@ -1,5 +1,4 @@
 import type { LinksFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
 import { db } from '~/utils/db.server';
 import { useLoaderData } from '@remix-run/react';
 import ProductCard from '~/components/productCard';
@@ -13,13 +12,13 @@ export async function loader() {
     const data = {
         productList: await db.product.findMany(),
     };
-    console.log(data.productList);
-    return json(data);
+    return data;
 }
 
 export default function Index() {
     const { productList } = useLoaderData<typeof loader>();
 
+    console.log(productList);
     return (
         <div>
             <nav>Nav</nav>
