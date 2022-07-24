@@ -9,21 +9,11 @@ export const links: LinksFunction = () => {
     return [{ rel: 'stylesheet', href: indexStyles }];
 };
 
-type Product = {
-    id: string;
-    name: string;
-    price: number;
-    image: string;
-};
-
-type LoaderData = {
-    productList: Array<Product>;
-};
-
 export async function loader() {
-    const data: LoaderData = {
+    const data = {
         productList: await db.product.findMany(),
     };
+    console.log(data.productList);
     return json(data);
 }
 
