@@ -25,7 +25,12 @@ export default function Index() {
             <header>Olivia's Unnamed Store</header>
             <main className='product-grid'>
                 {productList.map((product) => (
-                    <ProductCard key={product.id} name={product.name} price={product.price} image={product.image} />
+                    <ProductCard
+                        key={product.id}
+                        name={product.name}
+                        price={product.price}
+                        image={product.featuredImage}
+                    />
                 ))}
             </main>
         </div>
