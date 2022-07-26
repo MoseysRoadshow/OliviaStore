@@ -19,9 +19,10 @@
     aspect-ratio: 1/1;
     object-fit: cover;
 }
-/* 
+
 .product-card {
-} */
+    text-decoration: none;
+}
 
 .stacked {
     display: grid;
