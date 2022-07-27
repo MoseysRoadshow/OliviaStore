@@ -1,5 +1,30 @@
+header {
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    background: #f4f1e0;
+    width: 100%;
+    padding: 16px;
+    padding-right: 32px;
+    font-size: 2rem;
+}
+
+.link:link,
+.link:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+.wrapper {
+    background: #f4f1e0;
+    height: 100%;
+}
+
 .product-grid {
     padding: 16px;
+    padding-top: 90px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 8px;
@@ -20,8 +45,10 @@
     object-fit: cover;
 }
 
-.product-card {
-    text-decoration: none;
+.product-card:link,
+.product-card:visited {
+    text-decoration: inherit;
+    color: inherit;
 }
 
 .stacked {
