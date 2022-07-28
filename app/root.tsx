@@ -1,5 +1,6 @@
 import type { MetaFunction } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { CartProvider } from './hooks/useCart';
 
 import globalStyles from './styles/global.css';
 
@@ -20,12 +21,14 @@ export default function App() {
                 <Meta />
                 <Links />
             </head>
-            <body>
-                <Outlet />
-                <ScrollRestoration />
-                <Scripts />
-                <LiveReload />
-            </body>
+            <CartProvider>
+                <body>
+                    <Outlet />
+                    <ScrollRestoration />
+                    <Scripts />
+                    <LiveReload />
+                </body>
+            </CartProvider>
         </html>
     );
 }

@@ -2,6 +2,7 @@ import type { LinksFunction, LoaderArgs } from '@remix-run/node';
 import { Link } from '@remix-run/react';
 import { useLoaderData } from '@remix-run/react';
 import { db } from '~/utils/db.server';
+import { useCart } from '~/hooks/useCart';
 import productStyles from '~/styles/product.css';
 
 export const links: LinksFunction = () => {
@@ -20,11 +21,18 @@ export async function loader(args: LoaderArgs) {
 }
 
 export default function ProductRoute() {
+    const { addToCart } = useCart();
     const { product } = useLoaderData<typeof loader>();
     console.log({ product });
 
     if (!product) {
         return <div>Not a product</div>;
+    }
+
+    function handleOnClick() {
+        if (product) {
+            addToCart(product.slug, product.name, product.price, product.featuredImage);
+        }
     }
 
     return (
@@ -47,7 +55,7 @@ export default function ProductRoute() {
                     <h1>{product.name}</h1>
                     <h2>{product.description}</h2>
                     <h3>${product.price}</h3>
-                    <button>Add To Cart</button>
+                    <button onClick={handleOnClick}>Add To Cart</button>
                     <ul>
                         <li>
                             <h4>{product.details}</h4>
