@@ -1,8 +1,9 @@
+// import { useEffect, useState } from 'react';
 import type { LinksFunction, LoaderArgs } from '@remix-run/node';
 import { Link } from '@remix-run/react';
 import { useLoaderData } from '@remix-run/react';
 import { db } from '~/utils/db.server';
-import { useCart } from '~/hooks/useCart';
+import { useCart } from '~/utils/CartProvider';
 import productStyles from '~/styles/product.css';
 
 export const links: LinksFunction = () => {
@@ -22,17 +23,21 @@ export async function loader(args: LoaderArgs) {
 
 export default function ProductRoute() {
     const { addToCart } = useCart();
+    // const [pageTotal] = useState(0);
     const { product } = useLoaderData<typeof loader>();
     console.log({ product });
 
-    if (!product) {
-        return <div>Not a product</div>;
-    }
+    // useEffect(() => {
+    //     setPageTotal(total);
+    // }, [total]);
 
     function handleOnClick() {
         if (product) {
             addToCart(product.slug, product.name, product.price, product.featuredImage);
         }
+    }
+    if (!product) {
+        return <div>Not a product</div>;
     }
 
     return (
@@ -55,6 +60,7 @@ export default function ProductRoute() {
                     <h1>{product.name}</h1>
                     <h2>{product.description}</h2>
                     <h3>${product.price}</h3>
+                    {/* <h3>Total in cart: ${pageTotal}</h3> */}
                     <button onClick={handleOnClick}>Add To Cart</button>
                     <ul>
                         <li>

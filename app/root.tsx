@@ -1,6 +1,6 @@
 import type { MetaFunction } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-import { CartProvider } from './hooks/useCart';
+import { CartProvider } from './utils/CartProvider';
 
 import globalStyles from './styles/global.css';
 
