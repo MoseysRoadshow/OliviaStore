@@ -1,12 +1,17 @@
-import type { MetaFunction } from '@remix-run/node';
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { useEffect } from 'react';
+import type { LinksFunction, MetaFunction } from '@remix-run/node';
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useTransition } from '@remix-run/react';
+import NProgress from 'nprogress';
 import { CartProvider } from './utils/CartProvider';
-
+import nProgressStyles from 'nprogress/nprogress.css';
 import globalStyles from './styles/global.css';
 
-export function links() {
-    return [{ rel: 'stylesheet', href: globalStyles }];
-}
+export const links: LinksFunction = () => {
+    return [
+        { rel: 'stylesheet', href: nProgressStyles },
+        { rel: 'stylesheet', href: globalStyles },
+    ];
+};
 
 export const meta: MetaFunction = () => ({
     charset: 'utf-8',
@@ -15,6 +20,15 @@ export const meta: MetaFunction = () => ({
 });
 
 export default function App() {
+    const transition = useTransition();
+    useEffect(() => {
+        if (transition.state === 'idle') {
+            NProgress.done();
+        } else {
+            NProgress.start();
+        }
+    }, [transition.state]);
+
     return (
         <html lang='en'>
             <head>
