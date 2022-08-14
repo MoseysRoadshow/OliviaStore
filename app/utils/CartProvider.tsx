@@ -9,36 +9,35 @@ const CartItem = z.object({
     image: z.string(),
 });
 
-const CartCombined = z.object({
+const CartJson = z.object({
     total: z.number(),
     cart: z.object({}).catchall(CartItem),
 });
 
-const CartContext = createContext<
-    | {
-          cart: {
-              [x: string]: {
-                  slug: string;
-                  name: string;
-                  price: number;
-                  image: string;
-              };
-          };
-          total: number;
-          clearCart: () => void;
-          addToCart: (slug: string, name: string, price: number, image: string) => void;
-          removeFromCart: (slug: string) => void;
-      }
-    | undefined
->(undefined);
+interface Cart {
+    cart: {
+        [x: string]: {
+            slug: string;
+            name: string;
+            price: number;
+            image: string;
+        };
+    };
+    total: number;
+    clearCart: () => void;
+    addToCart: (slug: string, name: string, price: number, image: string) => void;
+    removeFromCart: (slug: string) => void;
+}
 
-function useCartState() {
-    const [{ cart = {}, total = 0 }, setCart] = useState(() => {
+const CartContext = createContext<Cart | undefined>(undefined);
+
+function useCartState(): Cart {
+    const [{ cart, total }, setCart] = useState(() => {
         // if saved data in local storage load into cart
         if (typeof window !== 'undefined') {
             const valueInLocalStorage = window.localStorage.getItem('cart');
             if (valueInLocalStorage) {
-                return CartCombined.parse(JSON.parse(valueInLocalStorage));
+                return CartJson.parse(JSON.parse(valueInLocalStorage));
             }
         }
         return { cart: {}, total: 0 };

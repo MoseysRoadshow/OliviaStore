@@ -19,6 +19,8 @@ export async function loader() {
 export default function Index() {
     const { productList } = useLoaderData<typeof loader>();
 
+    console.log({ productList });
+
     return (
         <div className='wrapper'>
             <header>
@@ -36,6 +38,7 @@ export default function Index() {
                         price={product.price}
                         image={product.featuredImage}
                         slug={product.slug}
+                        description={product.description}
                     />
                 ))}
             </main>
