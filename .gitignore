@@ -6,3 +6,5 @@ node_modules
 /.netlify
 /prisma/dev.db
 .env
+
+/app/tailwind.css

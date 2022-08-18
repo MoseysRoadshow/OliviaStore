@@ -5,11 +5,13 @@ import NProgress from 'nprogress';
 import { CartProvider } from './utils/CartProvider';
 import nProgressStyles from 'nprogress/nprogress.css';
 import globalStyles from './styles/global.css';
+import styles from './tailwind.css';
 
 export const links: LinksFunction = () => {
     return [
         { rel: 'stylesheet', href: nProgressStyles },
         { rel: 'stylesheet', href: globalStyles },
+        { rel: 'stylesheet', href: styles },
     ];
 };
 
@@ -36,7 +38,7 @@ export default function App() {
                 <Links />
             </head>
             <CartProvider>
-                <body>
+                <body id='root'>
                     <Outlet />
                     <ScrollRestoration />
                     <Scripts />
