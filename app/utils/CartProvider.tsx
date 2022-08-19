@@ -2,27 +2,27 @@ import { useState, createContext, useContext, useEffect } from 'react';
 import type { PropsWithChildren } from 'react';
 import { z } from 'zod';
 
-const CartItem = z.object({
-    slug: z.string(),
-    name: z.string(),
-    price: z.number(),
-    image: z.string(),
-});
-
 const CartJson = z.object({
     total: z.number(),
-    cart: z.object({}).catchall(CartItem),
+    cart: z.object({
+        slug: z.object({
+            slug: z.string(),
+            name: z.string(),
+            price: z.number(),
+            image: z.string(),
+        }),
+    }),
 });
 
+interface CartItem {
+    slug: string;
+    name: string;
+    price: number;
+    image: string;
+}
+
 interface Cart {
-    cart: {
-        [x: string]: {
-            slug: string;
-            name: string;
-            price: number;
-            image: string;
-        };
-    };
+    cart: Map<string, CartItem>;
     total: number;
     clearCart: () => void;
     addToCart: (slug: string, name: string, price: number, image: string) => void;
@@ -37,26 +37,28 @@ function useCartState(): Cart {
         if (typeof window !== 'undefined') {
             const valueInLocalStorage = window.localStorage.getItem('cart');
             if (valueInLocalStorage) {
-                return CartJson.parse(JSON.parse(valueInLocalStorage));
+                const { cart, total }: { cart: { [slug: string]: CartItem }; total: number } =
+                    JSON.parse(valueInLocalStorage);
+                return { cart: new Map(Object.entries(cart)), total };
             }
         }
-        return { cart: {}, total: 0 };
+        return { cart: new Map<string, CartItem>(), total: 0 };
     });
 
     function addToCart(slug: string, name: string, price: number, image: string) {
-        if (!cart[slug]) {
+        if (!cart.has(slug)) {
             setCart({
-                cart: { ...cart, [slug]: { slug, name, price, image } },
+                cart: new Map([...cart, ...new Map([[slug, { slug, name, price, image }]])]),
                 total: total + price,
             });
         }
     }
 
     function removeFromCart(slug: string) {
-        if (cart[slug]) {
-            const removedPrice = z.number().parse(cart[slug]?.price);
+        if (cart.has(slug)) {
+            const removedPrice = z.number().parse(cart.get(slug)?.price);
             const newCart = { ...cart };
-            delete newCart[slug];
+            newCart.delete(slug);
             setCart({
                 cart: newCart,
                 total: total - removedPrice,
@@ -65,12 +67,12 @@ function useCartState(): Cart {
     }
 
     function clearCart() {
-        setCart({ cart: {}, total: 0 });
+        setCart({ cart: new Map(), total: 0 });
     }
 
     // save the cart to local storage whenever it's changed
     useEffect(() => {
-        window.localStorage.setItem('cart', JSON.stringify({ cart, total }));
+        window.localStorage.setItem('cart', JSON.stringify({ cart: Object.fromEntries(cart), total }));
     }, [cart, total]);
 
     return { cart, total, clearCart, addToCart, removeFromCart };

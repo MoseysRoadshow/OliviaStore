@@ -3,11 +3,9 @@ import type { LinksFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { db } from '~/utils/db.server';
 import { Link } from '@remix-run/react';
-import Modal from 'react-modal';
 import ProductCard from '~/components/ProductCard';
 import indexStyles from '~/styles/index.css';
-
-Modal.setAppElement('#root');
+import Cart from '~/components/Cart';
 
 export const links: LinksFunction = () => {
     return [{ rel: 'stylesheet', href: indexStyles }];
@@ -22,21 +20,19 @@ export async function loader() {
 
 export default function Index() {
     const { productList } = useLoaderData<typeof loader>();
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(true);
 
     console.log({ productList });
 
     return (
         <div className='wrapper'>
-            <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
-                <div className='text-3xl font-bold underline'>The Modal</div>
-            </Modal>
+            <Cart modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
             <header>
                 <div>Menu</div>
                 <Link to='/' className='link'>
                     Store Name
                 </Link>
-                <div onClick={() => setModalIsOpen(true)}>Cart</div>
+                <button onClick={() => setModalIsOpen(true)}>Cart</button>
             </header>
             <main className='product-grid'>
                 {productList.map((product) => (

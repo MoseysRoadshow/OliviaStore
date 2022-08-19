@@ -1,17 +1,35 @@
-import { useState } from 'react';
 import Modal from 'react-modal';
+import { useCart } from '~/utils/CartProvider';
 
 Modal.setAppElement('#root');
 
-export default function Cart() {
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+export default function Cart({
+    modalIsOpen,
+    setModalIsOpen,
+}: {
+    modalIsOpen: boolean;
+    setModalIsOpen: (flag: boolean) => void;
+}) {
+    const { cart, total } = useCart();
+    console.log({ cart });
+    console.log({ total });
 
     return (
-        <>
-            <button onClick={() => setModalIsOpen(true)}>Open Modal</button>
-            <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
-                <div>The Modal</div>
-            </Modal>
-        </>
+        <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={() => setModalIsOpen(false)}
+            closeTimeoutMS={250}
+            className='border-1 absolute right-0 top-0 bottom-0 w-1/4 animate-modal-open overflow-auto border-solid border-red-100 bg-white p-5 outline-none'
+        >
+            <div>
+                <div className='text-3xl font-bold'>Cart</div>
+                {[...cart].map(([slug, item]) => (
+                    <div key={slug}>
+                        {item.name}
+                        {item.price}
+                    </div>
+                ))}
+            </div>
+        </Modal>
     );
 }
