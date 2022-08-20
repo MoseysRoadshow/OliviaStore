@@ -12,6 +12,9 @@ module.exports = {
             animation: {
                 'modal-open': 'slideIn 500ms both',
             },
+            gridTemplateColumns: {
+                300: 'repeat(auto-fit, minmax(300px, 1fr))',
+            },
         },
     },
     plugins: [],

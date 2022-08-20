@@ -25,16 +25,14 @@ export default function Index() {
     // console.log({ productList });
 
     return (
-        <div className='wrapper'>
+        <div className='bg-orange-50'>
             <Cart modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
-            <header>
+            <header className='fixed top-0 flex w-full justify-between bg-orange-50 p-4 text-3xl'>
                 <div>Menu</div>
-                <Link to='/' className='link'>
-                    Store Name
-                </Link>
+                <Link to='/'>Store Name</Link>
                 <button onClick={() => setModalIsOpen(true)}>Cart</button>
             </header>
-            <main className='product-grid'>
+            <main className='grid grid-cols-300 gap-2 p-4 pt-24'>
                 {productList.map((product) => (
                     <ProductCard
                         key={product.id}

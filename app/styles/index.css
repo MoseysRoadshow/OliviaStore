@@ -1,48 +1,14 @@
-header {
-    position: fixed;
-    top: 0;
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 16px;
-    background: #f4f1e0;
-    width: 100%;
-    padding: 16px;
-    padding-right: 32px;
-    font-size: 2rem;
-}
+/* 
 
 .link:link,
 .link:visited {
     text-decoration: none;
     color: inherit;
-}
+} */
 
-.wrapper {
+/* .wrapper {
     background: #f4f1e0;
     height: 100%;
-}
-
-.product-grid {
-    padding: 16px;
-    padding-top: 90px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 8px;
-}
-
-.product-content {
-    display: flex;
-    justify-content: space-between;
-    align-self: end;
-    background: white;
-    padding: 8px;
-    margin: 8px;
-}
-
-.product-image {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: cover;
 }
 
 .product-card:link,
@@ -51,21 +17,12 @@ header {
     color: inherit;
 }
 
-.stacked {
-    display: grid;
-}
-
-.stacked > * {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-}
-
 @media (min-width: 60em) {
     .product-card:first-child {
         grid-row: span 2;
         grid-column: span 2;
     }
-}
+} */
 
 .ReactModal__Overlay {
     opacity: 0;

@@ -10,12 +10,16 @@ type ProductCardType = {
 
 export default function ProductCard({ name, price, image, slug, description }: ProductCardType) {
     return (
-        <Link to={`/product/${slug}`} className='product-card stacked'>
-            <img className='product-image' src={image} alt={description} />
-            <div className='product-specials'>Back in stock</div>
-            <div className='product-content'>
-                <p className='product-name'>{name}</p>
-                <p className='product-price'>${price}</p>
+        <Link to={`/product/${slug}`} className='grid'>
+            <img
+                className='col-start-1 col-end-2 row-start-1 row-end-2 aspect-square w-full object-cover'
+                src={image}
+                alt={description}
+            />
+            <div className='col-start-1 col-end-2 row-start-1 row-end-2'>Back in stock</div>
+            <div className='col-start-1 col-end-2 row-start-1 row-end-2 m-2 flex justify-between self-end bg-white p-2'>
+                <p className=''>{name}</p>
+                <p className=''>${price}</p>
             </div>
         </Link>
     );

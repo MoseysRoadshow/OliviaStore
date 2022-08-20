@@ -32,7 +32,7 @@ function useCartState(): Cart {
                         cart: Map<string, CartItem>;
                         total: number;
                     }>(valueInLocalStorage);
-                    console.log({ cart });
+                    // console.log({ cart });
                     setCart({ cart, total });
                 } catch (error) {
                     // console.log(error);
