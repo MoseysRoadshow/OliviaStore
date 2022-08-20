@@ -22,7 +22,7 @@ export default function Index() {
     const { productList } = useLoaderData<typeof loader>();
     const [modalIsOpen, setModalIsOpen] = useState(true);
 
-    console.log({ productList });
+    // console.log({ productList });
 
     return (
         <div className='wrapper'>
@@ -46,6 +46,17 @@ export default function Index() {
                     />
                 ))}
             </main>
+        </div>
+    );
+}
+
+export function ErrorBoundary({ error }: { error: Error }) {
+    return (
+        <div>
+            <h1>Error</h1>
+            <p>{error.message}</p>
+            <p>The stack trace is:</p>
+            <pre>{error.stack}</pre>
         </div>
     );
 }

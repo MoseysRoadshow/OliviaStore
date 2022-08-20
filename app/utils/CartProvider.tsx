@@ -1,18 +1,6 @@
 import { useState, createContext, useContext, useEffect } from 'react';
 import type { PropsWithChildren } from 'react';
-import { z } from 'zod';
-
-const CartJson = z.object({
-    total: z.number(),
-    cart: z.object({
-        slug: z.object({
-            slug: z.string(),
-            name: z.string(),
-            price: z.number(),
-            image: z.string(),
-        }),
-    }),
-});
+import superjson from 'superjson';
 
 interface CartItem {
     slug: string;
@@ -32,18 +20,27 @@ interface Cart {
 const CartContext = createContext<Cart | undefined>(undefined);
 
 function useCartState(): Cart {
-    const [{ cart, total }, setCart] = useState(() => {
-        // if saved data in local storage load into cart
+    const [{ cart, total }, setCart] = useState({ cart: new Map<string, CartItem>(), total: 0 });
+
+    // load the cart from local storage
+    useEffect(() => {
         if (typeof window !== 'undefined') {
             const valueInLocalStorage = window.localStorage.getItem('cart');
             if (valueInLocalStorage) {
-                const { cart, total }: { cart: { [slug: string]: CartItem }; total: number } =
-                    JSON.parse(valueInLocalStorage);
-                return { cart: new Map(Object.entries(cart)), total };
+                try {
+                    const { cart, total } = superjson.parse<{
+                        cart: Map<string, CartItem>;
+                        total: number;
+                    }>(valueInLocalStorage);
+                    console.log({ cart });
+                    setCart({ cart, total });
+                } catch (error) {
+                    // console.log(error);
+                    window.localStorage.clear();
+                }
             }
         }
-        return { cart: new Map<string, CartItem>(), total: 0 };
-    });
+    }, []);
 
     function addToCart(slug: string, name: string, price: number, image: string) {
         if (!cart.has(slug)) {
@@ -56,7 +53,10 @@ function useCartState(): Cart {
 
     function removeFromCart(slug: string) {
         if (cart.has(slug)) {
-            const removedPrice = z.number().parse(cart.get(slug)?.price);
+            let removedPrice = cart.get(slug)?.price;
+            if (removedPrice === undefined) {
+                throw new Error('undefined price something went wrong');
+            }
             const newCart = { ...cart };
             newCart.delete(slug);
             setCart({
@@ -72,7 +72,13 @@ function useCartState(): Cart {
 
     // save the cart to local storage whenever it's changed
     useEffect(() => {
-        window.localStorage.setItem('cart', JSON.stringify({ cart: Object.fromEntries(cart), total }));
+        if (typeof window !== 'undefined') {
+            try {
+                window.localStorage.setItem('cart', superjson.stringify({ cart, total }));
+            } catch (error) {
+                console.log(error);
+            }
+        }
     }, [cart, total]);
 
     return { cart, total, clearCart, addToCart, removeFromCart };
