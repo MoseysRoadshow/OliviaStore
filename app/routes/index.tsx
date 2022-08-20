@@ -4,12 +4,6 @@ import { useLoaderData } from '@remix-run/react';
 import { db } from '~/utils/db.server';
 import { Link } from '@remix-run/react';
 import ProductCard from '~/components/ProductCard';
-import indexStyles from '~/styles/index.css';
-import Cart from '~/components/Cart';
-
-export const links: LinksFunction = () => {
-    return [{ rel: 'stylesheet', href: indexStyles }];
-};
 
 export async function loader() {
     const data = {
@@ -20,18 +14,11 @@ export async function loader() {
 
 export default function Index() {
     const { productList } = useLoaderData<typeof loader>();
-    const [modalIsOpen, setModalIsOpen] = useState(true);
 
     // console.log({ productList });
 
     return (
-        <div className='bg-orange-50'>
-            <Cart modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
-            <header className='fixed top-0 flex w-full justify-between bg-orange-50 p-4 text-3xl'>
-                <div>Menu</div>
-                <Link to='/'>Store Name</Link>
-                <button onClick={() => setModalIsOpen(true)}>Cart</button>
-            </header>
+        <div className='h-full bg-orange-50'>
             <main className='grid grid-cols-300 gap-2 p-4 pt-24'>
                 {productList.map((product) => (
                     <ProductCard
