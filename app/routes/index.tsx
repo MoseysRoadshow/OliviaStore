@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import type { LinksFunction } from '@remix-run/node';
+// import { useState } from 'react';
+// import type { LinksFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { db } from '~/utils/db.server';
-import { Link } from '@remix-run/react';
+// import { Link } from '@remix-run/react';
 import ProductCard from '~/components/ProductCard';
 
 export async function loader() {

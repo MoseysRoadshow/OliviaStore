@@ -1,7 +1,8 @@
 import type { LoaderArgs } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { db } from '~/utils/db.server';
-import { useCart } from '~/utils/CartProvider';
+// import { useCart } from '~/utils/CartProvider';
+import { useShoppingCart } from '~/shoppingCart';
 
 export async function loader(args: LoaderArgs) {
     const data = {
@@ -15,10 +16,11 @@ export async function loader(args: LoaderArgs) {
 }
 
 export default function ProductRoute() {
-    const { addToCart } = useCart();
+    // const { addToCart } = useCart();
+    const addToCart = useShoppingCart((state) => state.addToCart);
     // const [pageTotal] = useState(0);
     const { product } = useLoaderData<typeof loader>();
-    console.log({ product });
+    // console.log({ product });
 
     // useEffect(() => {
     //     setPageTotal(total);
@@ -26,7 +28,7 @@ export default function ProductRoute() {
 
     function handleOnClick() {
         if (product) {
-            addToCart(product.slug, product.name, product.price, product.featuredImage);
+            addToCart({ slug: product.slug, name: product.name, price: product.price, image: product.featuredImage });
         }
     }
     if (!product) {
