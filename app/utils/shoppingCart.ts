@@ -13,6 +13,8 @@ interface Cart {
     cart: Map<string, CartItem>;
     addToCart: (item: CartItem) => void;
     removeFromCart: (slug: string) => void;
+    showCart: boolean;
+    setShowCart: (flag: boolean) => void;
     // clearCart: () => void;
 }
 
@@ -20,13 +22,15 @@ export const useShoppingCart = create<Cart>()(
     persist(
         (set, get) => ({
             cart: new Map<string, CartItem>(),
+            showCart: false,
+            setShowCart: (flag) => set({ showCart: flag }),
             addToCart: (item) => {
                 const { cart } = get();
                 if (!cart.has(item.slug)) {
                     cart.set(item.slug, item);
                 }
 
-                set({ cart });
+                set({ cart, showCart: true });
             },
             removeFromCart: (slug) => {
                 const { cart } = get();

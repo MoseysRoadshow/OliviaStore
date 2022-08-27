@@ -5,6 +5,7 @@ import NProgress from 'nprogress';
 import nProgressStyles from 'nprogress/nprogress.css';
 import styles from './tailwind.css';
 import Cart from './components/Cart';
+import { useShoppingCart } from './utils/shoppingCart';
 
 export const links: LinksFunction = () => {
     return [
@@ -20,7 +21,8 @@ export const meta: MetaFunction = () => ({
 });
 
 export default function App() {
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    // const [modalIsOpen, setModalIsOpen] = useState(false);
+    const setShowCart = useShoppingCart((state) => state.setShowCart);
     const transition = useTransition();
     useEffect(() => {
         if (transition.state === 'idle') {
@@ -37,11 +39,11 @@ export default function App() {
                 <Links />
             </head>
             <body id='root'>
-                <Cart modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
+                <Cart />
                 <header className='fixed top-0 flex w-full justify-between bg-orange-50 p-4 text-3xl'>
                     <div>Menu</div>
                     <Link to='/'>Store Name</Link>
-                    <button onClick={() => setModalIsOpen(true)}>Cart</button>
+                    <button onClick={() => setShowCart(true)}>Cart</button>
                 </header>
                 <Outlet />
                 <ScrollRestoration />

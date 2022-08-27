@@ -1,28 +1,17 @@
 import Modal from 'react-modal';
-// import { useCart } from '~/utils/CartProvider';
-import { useShoppingCart } from '~/shoppingCart';
+import { useShoppingCart } from '~/utils/shoppingCart';
 
 Modal.setAppElement('#root');
 
-export default function Cart({
-    modalIsOpen,
-    setModalIsOpen,
-}: {
-    modalIsOpen: boolean;
-    setModalIsOpen: (flag: boolean) => void;
-}) {
-    // const { cart, total } = useCart();
-    const { cart, removeFromCart } = useShoppingCart((state) => state);
-    // console.log({ cart });
+export default function Cart() {
+    const { cart, removeFromCart, showCart, setShowCart } = useShoppingCart((state) => state);
     const total = [...cart].reduce((acc, [_, item]) => acc + item.price, 0);
-    // console.log({ total });
 
     return (
         <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={() => setModalIsOpen(false)}
+            isOpen={showCart}
+            onRequestClose={() => setShowCart(false)}
             closeTimeoutMS={250}
-            // className='border-1 absolute right-0 top-0 bottom-0 w-1/4 animate-modal-open overflow-auto border-solid border-red-100 bg-white p-5 outline-none'
             className={{
                 base: 'border-1 absolute right-0 top-0 bottom-0 w-1/4 animate-modal-open overflow-auto border-solid bg-gray-100 p-5 outline-none',
                 afterOpen: '',
