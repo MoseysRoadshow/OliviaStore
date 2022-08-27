@@ -31,6 +31,8 @@ export default function App() {
         }
     }, [transition.state]);
 
+    setShowCart(true);
+
     return (
         <html lang='en'>
             <head>

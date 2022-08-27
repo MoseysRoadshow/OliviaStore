@@ -20,7 +20,13 @@ export default function ProductRoute() {
 
     function handleOnClick() {
         if (product) {
-            addToCart({ slug: product.slug, name: product.name, price: product.price, image: product.featuredImage });
+            addToCart({
+                slug: product.slug,
+                name: product.name,
+                price: product.price,
+                image: product.featuredImage,
+                description: product.description,
+            });
         }
     }
     if (!product) {

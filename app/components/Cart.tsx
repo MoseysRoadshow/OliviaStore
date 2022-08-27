@@ -6,17 +6,18 @@ Modal.setAppElement('#root');
 export default function Cart() {
     const { cart, removeFromCart, showCart, setShowCart } = useShoppingCart((state) => state);
     const total = [...cart].reduce((acc, [_, item]) => acc + item.price, 0);
-
+    console.log({ showCart });
+    console.log({ cart });
     return (
         <Modal
             isOpen={showCart}
             onRequestClose={() => setShowCart(false)}
             closeTimeoutMS={250}
             className={{
-                base: 'border-1 absolute right-0 top-0 bottom-0 w-1/4 animate-modal-open overflow-auto border-solid bg-gray-100 p-5 outline-none',
+                base: 'border-1 absolute right-0 top-0 bottom-0 w-full animate-modal-open overflow-auto border-solid bg-gray-100 p-5 outline-none md:w-1/2',
                 afterOpen: '',
                 beforeClose:
-                    'border-1 absolute right-0 top-0 bottom-0 w-1/4 animate-modal-close overflow-auto border-solid bg-gray-100 p-5 outline-none',
+                    'border-1 absolute right-0 top-0 bottom-0 w-full animate-modal-close overflow-auto border-solid bg-gray-100 p-5 outline-none md:w-1/2',
             }}
             overlayClassName={{
                 base: 'fixed inset-0 bg-white animate-fade-in',
@@ -24,19 +25,22 @@ export default function Cart() {
                 beforeClose: '',
             }}
         >
-            <div className='flex animate-fade-in-modal flex-col gap-2'>
-                <div className='text-3xl font-bold'>Cart</div>
+            <aside className='flex animate-fade-in-modal flex-col gap-4 divide-y divide-black'>
+                <h1 className='text-3xl font-bold'>Cart ({cart.size})</h1>
                 {[...cart].map(([slug, item]) => (
-                    <div key={slug}>
-                        {item.name}
-                        {item.price}
-                        <button onClick={() => removeFromCart(slug)} className={'bg-gray-200 p-1'}>
-                            Remove from cart
-                        </button>
-                    </div>
+                    <article key={slug} className='flex items-center justify-between p-1 text-xl'>
+                        <img alt={item.description} src={`/${item.image}`} className='h-24 w-24' />
+                        <div className='flex h-full flex-col justify-between'>
+                            <div>{item.name}</div>
+                            <button onClick={() => removeFromCart(slug)} className={'bg-gray-200 p-1'}>
+                                Remove from cart
+                            </button>
+                        </div>
+                        <div className='font-bold'>${item.price}</div>
+                    </article>
                 ))}
-                <div>Total: {total}</div>
-            </div>
+                <div className='text-2xl'>Total: {total}</div>
+            </aside>
         </Modal>
     );
 }
