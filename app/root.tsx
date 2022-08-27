@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import type { LinksFunction, MetaFunction } from '@remix-run/node';
 import { Link, Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useTransition } from '@remix-run/react';
 import NProgress from 'nprogress';
@@ -21,7 +21,6 @@ export const meta: MetaFunction = () => ({
 });
 
 export default function App() {
-    // const [modalIsOpen, setModalIsOpen] = useState(false);
     const setShowCart = useShoppingCart((state) => state.setShowCart);
     const transition = useTransition();
     useEffect(() => {
