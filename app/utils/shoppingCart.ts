@@ -44,7 +44,7 @@ export const useShoppingCart = create<Cart>()(
         {
             name: 'cart',
             serialize: (state) => superjson.stringify(state),
-            deserialize: (str) => superjson.parse(str),
+            deserialize: (str) => superjson.parse<{ state: Cart }>(str),
         },
     ),
 );
