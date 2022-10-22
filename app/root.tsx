@@ -16,12 +16,12 @@ export const links: LinksFunction = () => {
 
 export const meta: MetaFunction = () => ({
     charset: 'utf-8',
-    title: 'Olivia Store',
+    title: "Mosey's Roadshow",
     viewport: 'width=device-width,initial-scale=1',
 });
 
 export default function App() {
-    const setShowCart = useShoppingCart((state) => state.setShowCart);
+    // const setShowCart = useShoppingCart((state) => state.setShowCart);
     const transition = useTransition();
     useEffect(() => {
         if (transition.state === 'idle') {
