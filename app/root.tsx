@@ -11,6 +11,7 @@ export const links: LinksFunction = () => {
     return [
         { rel: 'stylesheet', href: nProgressStyles },
         { rel: 'stylesheet', href: styles },
+        { rel: 'icon', href: '/favicon.ico' },
     ];
 };
 
