@@ -13,25 +13,41 @@ export async function loader() {
 }
 
 export default function Index() {
-    const { productList } = useLoaderData<typeof loader>();
+    // const { productList } = useLoaderData<typeof loader>();
 
     // console.log({ productList });
 
+    // return (
+    //     <div className='h-full bg-orange-50'>
+    //         <main className='grid grid-cols-300 gap-2 p-4 pt-24'>
+    //             {productList.map((product) => (
+    //                 <ProductCard
+    //                     key={product.id}
+    //                     name={product.name}
+    //                     price={product.price}
+    //                     image={product.featuredImage}
+    //                     slug={product.slug}
+    //                     description={product.description}
+    //                 />
+    //             ))}
+    //         </main>
+    //     </div>
+    // );
     return (
-        <div className='h-full bg-orange-50'>
-            <main className='grid grid-cols-300 gap-2 p-4 pt-24'>
-                {productList.map((product) => (
-                    <ProductCard
-                        key={product.id}
-                        name={product.name}
-                        price={product.price}
-                        image={product.featuredImage}
-                        slug={product.slug}
-                        description={product.description}
-                    />
-                ))}
-            </main>
-        </div>
+        <>
+            <div
+                className='flex h-screen flex-col items-center justify-center'
+                style={{
+                    backgroundImage: 'url(/casa.jpg)',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center center',
+                    backgroundSize: 'contain',
+                }}
+            >
+                <h1 className='font-pacifico text-3xl text-white'>coming soon</h1>
+            </div>
+            {/* <img alt='casa' src='casa.jpg' className=' w-full' /> */}
+        </>
     );
 }
 

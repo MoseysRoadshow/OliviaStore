@@ -2,6 +2,9 @@
 module.exports = {
     content: ['./app/**/*.{js,ts,jsx,tsx}'],
     theme: {
+        fontFamily: {
+            pacifico: ['Pacifico', 'cursive'],
+        },
         extend: {
             keyframes: {
                 slideIn: {

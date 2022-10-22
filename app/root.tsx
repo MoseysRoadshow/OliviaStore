@@ -40,12 +40,12 @@ export default function App() {
                 <Links />
             </head>
             <body id='root'>
-                <Cart />
-                <header className='fixed top-0 flex w-full justify-between bg-orange-50 p-4 text-3xl'>
+                {/* <Cart /> */}
+                {/* <header className='fixed top-0 flex w-full justify-between bg-orange-50 p-4 text-3xl'>
                     <div>Menu</div>
                     <Link to='/'>Store Name</Link>
                     <button onClick={() => setShowCart(true)}>Cart</button>
-                </header>
+                </header> */}
                 <Outlet />
                 <ScrollRestoration />
                 <Scripts />
